@@ -8,14 +8,16 @@ export async function POST(req: Request) {
     const { messages } = await req.json();
 
     const result = await streamText({
-        model: openai("gpt-3.5-turbo"),
+        model: openai("gpt-3.5-turbo-0125"),
         messages: convertToCoreMessages(messages),
         tools: {
             toggleMode: {
                 description: `
-                    Toggle between light and dark mode. Always call this tool when
-                     the user asks to set the light or dark mode. Call this tool if
-                     the user simply prompts "dark mode" or "light mode"`,
+                    Toggle between light, dark and system mode. Always call this tool when
+                     the user asks to set the light, dark or system mode. Call this tool if
+                     the user simply prompts "dark mode", "light mode" or "system mode". If
+                     the user asks you to do anything else regarding this task, explain why
+                     you can't do that.`,
                 parameters: z.object({
                     mode: z.enum(["light", "dark", "system"]),
                 }),
