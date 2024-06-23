@@ -9,8 +9,8 @@ const fontSans = FontSans({
   variable: "--font-sans", });
 
 export const metadata: Metadata = {
-  title: "ai-dark-theme",
-  description: "Prompt the llm to toggle between dark and light themes",
+  title: "ai-toggle-mode",
+  description: "Prompt the llm to change between dark, light and system themes",
 };
 
 export default function RootLayout({
