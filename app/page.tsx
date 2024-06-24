@@ -2,21 +2,33 @@
 
 import { Message, useChat } from "ai/react";
 import { useTheme } from "next-themes";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
 export default function Home() {
   const inputRef = useRef<HTMLInputElement>(null);
   const { setTheme } = useTheme();
-  const { messages, input, handleSubmit, handleInputChange } = useChat({
+  const [clearMessages, setClearMessages] = useState(false);
+  const { messages, input, handleSubmit, handleInputChange, setMessages } = useChat({
     maxToolRoundtrips: 5,
     async onToolCall({ toolCall }) {
       if (toolCall.toolName === "toggleMode") {
-        // @ts-ignore
-        setTheme(toolCall.args.mode as string);
+        setTheme((toolCall.args as { mode: string }).mode);
         return "Mode has been set";
+      }
+
+      if (toolCall.toolName === "clearMessages") {
+        setClearMessages(true);        
+        return "Messages have been cleared";
       }
     },
   });
+
+  useEffect(() => {
+    if (clearMessages) {
+      setMessages([{ id: "id", role: "assistant", content: "Messages cleared."}]);
+      setClearMessages(false);
+    }
+  }, [messages])
 
   useEffect(() => {
     if (inputRef.current) {
