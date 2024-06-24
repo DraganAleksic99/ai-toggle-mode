@@ -2,12 +2,11 @@
 
 import { Message, useChat } from "ai/react";
 import { useTheme } from "next-themes";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 
 export default function Home() {
   const inputRef = useRef<HTMLInputElement>(null);
   const { setTheme } = useTheme();
-  const [clearMessages, setClearMessages] = useState(false);
   const { messages, input, handleSubmit, handleInputChange, setMessages } = useChat({
     maxToolRoundtrips: 5,
     async onToolCall({ toolCall }) {
@@ -17,18 +16,12 @@ export default function Home() {
       }
 
       if (toolCall.toolName === "clearMessages") {
-        setClearMessages(true);        
+        // don't understand why this doesn't work without setTimeout
+        setTimeout(() => setMessages([{ id: "id", role: "assistant", content: "Messages cleared."}]), 0);
         return "Messages have been cleared";
       }
     },
   });
-
-  useEffect(() => {
-    if (clearMessages) {
-      setMessages([{ id: "id", role: "assistant", content: "Messages cleared."}]);
-      setClearMessages(false);
-    }
-  }, [messages])
 
   useEffect(() => {
     if (inputRef.current) {
