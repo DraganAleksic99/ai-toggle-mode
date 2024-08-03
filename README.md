@@ -1,9 +1,10 @@
 # ai-toggle-mode
 
 Set the light/dark/system mode by simply typing the mode you want, e.g. ‘dark mode’, in the chat.
-The prompt executes client-side tool implemented with [Vercel AI SDK](https://sdk.vercel.ai/docs/introduction)
+The prompt executes client-side tool implemented with [Vercel AI SDK](https://sdk.vercel.ai/docs/introduction).
 
 https://github.com/DraganAleksic99/ai-toggle-mode/assets/120718648/64c033a0-d54b-4005-8436-0361112197af
+> Prompting an llm to set dark or system theme
 
 ## Quickstart
 
