@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     const { messages } = await req.json();
 
     const result = streamText({
-        model: openai("gpt-3.5-turbo-0125"),
+        model: openai("gpt-4-turbo"),
         messages: convertToCoreMessages(messages),
         tools: {
             toggleMode: {
