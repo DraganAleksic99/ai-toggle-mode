@@ -7,7 +7,7 @@ export const maxDuration = 30;
 export async function POST(req: Request) {
     const { messages } = await req.json();
 
-    const result = await streamText({
+    const result = streamText({
         model: openai("gpt-3.5-turbo-0125"),
         messages: convertToCoreMessages(messages),
         tools: {
@@ -33,5 +33,5 @@ export async function POST(req: Request) {
         }
     });
 
-    return result.toAIStreamResponse();
+    return result.toDataStreamResponse();
 }
